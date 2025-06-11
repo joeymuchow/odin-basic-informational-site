@@ -1,39 +1,26 @@
-import { createServer } from 'http';
+import express from 'express';
 import path from 'path';
-import fs from 'fs';
 
-const server = createServer((req, res) => {
-  const __dirname = import.meta.dirname;
+const app = express();
 
-  let url = req.url;
-  if (url !== '/' && url.indexOf('.') < 0) {
-    url += '.html';
-  }
+const __dirname = import.meta.dirname;
 
-  // Build filepath
-  const filepath = path.join(__dirname, 'routes', url === '/' ? 'index.html' : url);
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'routes', 'index.html'));
+});
 
-  fs.readFile(filepath, (err, content) => {
-    if (err) {
-      if (err.code === 'ENOENT') {
-        // Page not found
-        fs.readFile(path.join(__dirname, 'routes', '404.html'), (err, content) => {
-          res.writeHead(200, { 'Content-Type': 'text/html'});
-          res.end(content, 'utf8');
-        });
-      } else {
-        // Server error
-        res.writeHead(500);
-        res.end(`Server error: ${err.code}`);
-      }
-    } else {
-      res.writeHead(200, { 'Content-Type': 'text/html'});
-      res.end(content, 'utf8');
-    }
-  });
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(__dirname, 'routes', 'about.html'));
+});
 
+app.get('/contact-me', (req, res) => {
+  res.sendFile(path.join(__dirname, 'routes', 'contact-me.html'));
+});
+
+app.use((req, res, next) => {
+  res.status(404).sendFile(path.join(__dirname, 'routes', '404.html'));
 });
 
 const PORT = process.env.PORT || 8080;
 
-server.listen(PORT, () => `Server running on ${PORT}`);
+app.listen(PORT, () => `Server running on ${PORT}`);
