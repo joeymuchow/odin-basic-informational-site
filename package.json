@@ -1,0 +1,20 @@
+{
+  "name": "odin-basic-informational-site",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/joeymuchow/odin-basic-informational-site#readme",
+  "bugs": {
+    "url": "https://github.com/joeymuchow/odin-basic-informational-site/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeymuchow/odin-basic-informational-site.git"
+  },
+  "license": "MIT",
+  "author": "Joey Muchow",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
